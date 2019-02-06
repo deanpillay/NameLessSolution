@@ -1,0 +1,100 @@
+﻿@model DemoMvcApp.Models.ViewModels.TournamentEventListViewModel
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.TournamentID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TournamentID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.TournamentName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TournamentName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-1 col-md-11">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Events[0].EventID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Events[0].EventName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Events[0].EventNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Events[0].EventDateTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Events[0].EventEndDateTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Events[0].AutoClose)
+                        </th>
+                    </tr>
+                    @if (Model.Events != null)
+                    {
+                        for (var i = 0; i < Model.Events.Count(); i++)
+                        {
+                    <tr>
+                        @Html.HiddenFor(x => Model.Events[i].FK_TournamentID)
+                        <td>
+                            @Html.TextBoxFor(x => Model.Events[i].EventID, new { @class = "form-control", @readonly = "readonly" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(x => Model.Events[i].EventName, new { @class = "form-control", @readonly = "readonly" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(x => Model.Events[i].EventNumber, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(x => Model.Events[i].EventDateTime, new { @class = "form-control", @readonly = "readonly" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(x => Model.Events[i].EventEndDateTime, new { @class = "form-control", @readonly = "readonly" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(x => Model.Events[i].AutoClose, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                        }
+                    }
+                       </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-11">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+    @section Scripts {
+        <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+
+        function Delete(id) {
+            alertify.confirm('NameLess Application', 'Are you sure you want to Delete this record?', function () {
+                window.location.href = '@Url.Action("Delete", "Tournament")/' + id;
+            },null)
+        }
+        </script>
+    }

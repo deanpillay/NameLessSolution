@@ -1,0 +1,42 @@
+﻿@model DemoMvcApp.Models.ViewModels.TournamentEditViewModel
+
+@{
+    ViewData["Title"] = "Tournament";
+}
+
+<h1>CreateorEdit</h1>
+
+<h4>TournamentEditViewModel</h4>
+<p>
+    <h4>Create a new tournament by entering the tournament name.</h4>
+</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateorEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TournamentID" class="control-label"></label>
+                <input asp-for="TournamentID" class="form-control" />
+                <span asp-validation-for="TournamentID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TournamentName" class="control-label"></label>
+                <input asp-for="TournamentName" class="form-control" />
+                <span asp-validation-for="TournamentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-outline-success" />
+                <input type="reset" value="Reset" class="btn btn-outline-warning" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
