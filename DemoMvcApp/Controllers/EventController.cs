@@ -29,7 +29,7 @@ namespace DemoMvcApp.Controllers
 
         NameLessAPI _api = new NameLessAPI();
 
-        public async Task<TournamentEventListViewModel> Index(long tournamentID)
+        public async Task<ActionResult> Index(long tournamentID)
         {
             //List<TournamentDisplayViewModel> tournaments = new List<TournamentDisplayViewModel>();
             List<TournamentEventListViewModel> model = new List<TournamentEventListViewModel>();
@@ -71,9 +71,9 @@ namespace DemoMvcApp.Controllers
 
                     tournamentEventsListVm.Events = eventsListVm;
                 }
-                return tournamentEventsListVm;
+                model = tournamentEventsListVm;
             }
-            return null;
+            return View(model);
         }
 
     //public async Task<IActionResult> CreateorEdit(long id = 0)
