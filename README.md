@@ -9,7 +9,7 @@ Start application without debugging
 Make a POST request to https://localhost:44351/api/users/register as a RAW Json object:
 
 {
-   "UserName":"testusertwo",
+   "UserName":"testuser",
    "Password": "notanotherpassword"
 } 
 
