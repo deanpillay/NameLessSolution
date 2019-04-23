@@ -23,4 +23,5 @@ namespace WebAPI
                 //.UseUrls("https://localhost:44351/");
 
     }
+#pragma warning restore CS1591
 }

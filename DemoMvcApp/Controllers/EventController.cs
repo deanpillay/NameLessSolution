@@ -31,9 +31,7 @@ namespace DemoMvcApp.Controllers
 
         public async Task<ActionResult> Index(long tournamentID)
         {
-            //List<TournamentDisplayViewModel> tournaments = new List<TournamentDisplayViewModel>();
-            List<TournamentEventListViewModel> model = new List<TournamentEventListViewModel>();
-            List<EventDisplayViewModel> eventsListVm = new List<EventDisplayViewModel>();
+            List<EventDisplayViewModel> eventsList = new List<EventDisplayViewModel>();
 
             token = await GetApiToken();
 
@@ -47,7 +45,7 @@ namespace DemoMvcApp.Controllers
             var tournament = JsonConvert.DeserializeObject<List<TournamentDisplayViewModel>>(result);
             foreach (var x in tournament)
             {
-                var tournamentEventsListVm = new TournamentEventListViewModel()
+                var tournamentEventsList = new TournamentEventListViewModel()
                 {
                     TournamentID = x.TournamentID,
                     TournamentName = x.TournamentName
@@ -55,11 +53,11 @@ namespace DemoMvcApp.Controllers
 
                 HttpResponseMessage responseTwo = await client.GetAsync("event/" + tournamentID);
 
-                var resultTwo = response.Content.ReadAsStringAsync().Result;
-                var events = JsonConvert.DeserializeObject<List<EventDisplayViewModel>>(result);
+                var resultTwo = responseTwo.Content.ReadAsStringAsync().Result;
+                var events = JsonConvert.DeserializeObject<List<EventDisplayViewModel>>(resultTwo);
                 foreach (var y in events.ToList())
                 {
-                    eventsListVm.Add(new EventDisplayViewModel
+                    eventsList.Add(new EventDisplayViewModel
                         {
                         EventID = y.EventID,
                         EventName = y.EventName,
@@ -69,34 +67,34 @@ namespace DemoMvcApp.Controllers
                         AutoClose = y.AutoClose
                     });
 
-                    tournamentEventsListVm.Events = eventsListVm;
+                    tournamentEventsList.Events = eventsList;
                 }
-                model = tournamentEventsListVm;
+                return View(tournamentEventsList);
             }
-            return View(model);
+            return null;
         }
 
-    //public async Task<IActionResult> CreateorEdit(long id = 0)
-    //{
-    //    if (id == 0)
-    //    {
-    //        return View(new EventDisplayViewModel());
-    //    }
-    //    else
-    //    {
-    //        token = await GetApiToken();
+        public async Task<IActionResult> CreateorEdit(long id = 0)
+        {
+            if (id == 0)
+            {
+                return View(new EventDisplayViewModel());
+            }
+            else
+            {
+                token = await GetApiToken();
 
-    //        HttpClient client = _api.Initial();
+                HttpClient client = _api.Initial();
 
-    //        client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-    //        HttpResponseMessage response = await client.GetAsync("Event/" + id.ToString());
+                HttpResponseMessage response = await client.GetAsync("Event/" + id.ToString());
 
-    //        return View(response.Content.ReadAsAsync<EventDisplayViewModel>().Result);
-    //    }
-    //}
+                return View(response.Content.ReadAsAsync<EventDisplayViewModel>().Result);
+            }
+        }
 
-    [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Index(TournamentEventListViewModel model)
         {
             token = await GetApiToken();

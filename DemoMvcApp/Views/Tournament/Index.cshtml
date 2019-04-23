@@ -35,9 +35,7 @@
             <td>
                 <a href="@Url.Action("CreateorEdit","Tournament", new { id = item.TournamentID })" class="btn btn-outline-primary"><i class="fa fa-pencil"></i> Edit</a>
                 <a onclick="Delete(@item.TournamentID)" class="btn btn-outline-danger"><i class="fa fa-trash"></i> Delete</a>
-                <a href="@Url.Action("Index","Event", new { FK_TournamentID = item.TournamentID })" class="btn btn-outline-info"><i class="fa fa-details"></i> Events</a>
-                <a href="@Url.Action("Event","Index", new { tournamentID = item.TournamentID }, null)" class="btn btn-outline-info"><i class="fa fa-details"></i> Events</a>
-                @Html.ActionLink("Events", "Index", "Event", new { tournamentID = item.TournamentID }, null)
+                <a href="@Url.Action("Index","Event", new { tournamentID = item.TournamentID })" class="btn btn-outline-info"><i class="fa fa-details"></i> Events</a>
             </td>
         </tr>
         }
